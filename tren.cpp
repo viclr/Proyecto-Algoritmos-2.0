@@ -90,7 +90,7 @@ void mostrarAmenidades(Vagon* actual)
         } while (actualAmenidad != actual->amenidades);
     }
 
-// Function to delete an amenity
+
 void eliminarAmenidad(string nombre) {
         if (amenidades == nullptr)
         {
@@ -164,7 +164,7 @@ void modificarAmenidad() {
                 cin >> opcion_modificar;
                 while (cin.fail() || (opcion_modificar < 1 || opcion_modificar > 2))
                 {
-                    cin.clear(); // Clear the input error
+                    cin.clear(); 
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     cout << "Opcion no valida. Intente de nuevo: ";
                     cin >> opcion_modificar;
@@ -227,7 +227,7 @@ void agregarVagon(Vagon*& cabeza, const string& nombreNuevoVagon, Vagon*& vagona
     cout << "Vagon '" << nombreNuevoVagon << "' agregado correctamente despues de "<< vagonactual->nombre << "." << endl;
 }
 
-// Function to delete a wagon
+
 void eliminarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
     if (cabeza == nullptr) 
     {
@@ -275,7 +275,7 @@ void eliminarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
 
 
 void modificarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
-    if (cabeza == nullptr) //
+    if (cabeza == nullptr) 
     {
         cout << "No existen vagones en el tren" << endl;
         return;
@@ -300,7 +300,7 @@ void modificarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
 }
 
 void verVagones(Vagon* cabeza) {
-    if (cabeza == nullptr) //
+    if (cabeza == nullptr) 
     {
         cout << "No hay vagones en el tren." << endl;
         return;
