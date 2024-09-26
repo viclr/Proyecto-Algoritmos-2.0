@@ -319,63 +319,142 @@ void verVagones(Vagon* cabeza) {
 }
 
 //Aquí estoy intentado hacer el menú de todas las cosas//
-void Menu_para_administrar_información(/*meter las listas y las funcione*/)
+void Menu_para_administrar_informacion(//aquí hay que llamas a las listas correspondiendtes)
 {
-    int opcion=0
-    While(opcion !=6)
+    int opcion = 0;
+    while (opcion != 6)
     {
         cout << "\n-+-+-+-+-+-+ Menu del tren +-+-+-+-+-+-+-+-\n";
         cout << "1: Detalles de los pasajeros.\n";
         cout << "2: Detalles de los vagones.\n";
-        cout << "3: Detalles estaciones\n";
-        cout << "4: Detalles anenidades.\n";
+        cout << "3: Detalles de las estaciones.\n";
+        cout << "4: Detalles de las amenidades.\n";
         cout << "5: Moverse por el vagon.\n";
         cout << "6: Salir al menu principal\n";
         cout << "Seleccione una opcion: ";
         cin >> opcion;
+
         switch (opcion)
         {
-        case 1:{
-            int opcion1;
-            cout << "\n-+-+-+-+Administrar lista de pasajeros+-+-+-" << endl;
-            cout << "1.Agregar pasajero" <<endl;
-            cout << "2.Mostrar todos los pasajeros"<<endl;
-            cout << "3.Eliminar pasajero" <<endl;
-            cout << "Elija una opcion" ;
-            cin >> opción 1;
+            case 1: {
+                int opcion1;
+                cout << "\n-+-+-+-+Administrar lista de pasajeros+-+-+-" << endl;
+                cout << "1. Agregar pasajero" << endl;
+                cout << "2. Mostrar todos los pasajeros" << endl;
+                cout << "3. Eliminar pasajero" << endl;
+                cout << "Elija una opcion: ";
+                cin >> opcion1;
 
-            swich(opcion1){
-                case 1:{
-                    string nombre; //aqui debemosllemar esas funciones
-                   //creo que aquí va aun dato con respecto al pasajero
-                    string vagon;
-                    cout << "Ingrese el nombre del pasajero" << endl;
-                    cin  >> nombre; //aqui seria la funcion que cumple esta funcion 
-                    cout <<"Ingrese el vagon";
-                    cin  >> vagon;
-                    break;
-                }
-                case 2:
-                //Aquí debe ir la lista qur contiene todos los pasajeros
-                break;
+                switch (opcion1) {
+                    case 1: {
+                        string nombre;
+                        int edad;
+                        string vagon;
 
-                case 3:{
-                    string //aqui va la funcion para eliminar pasajeros
-                    string // aquí va la funcion del vagon
-                    cout << "Aqui estan todods los pasajeros que estan abordo";
-                    //aqui la funcion que muestre los pasajeros
-                    cout << "Inhgrese el nombre del pasajero a eleminar";
-                    cin >> //igual el nombre de la funcion para eleminar pasajeros
-                    cout << "Ingrese el vagon del pasajero";
-                    cin >> //funcion del vagon
-                    //aqui habria que mostrar que se elimino
-                    break;
+                        cout << "Ingrese el nombre del pasajero: ";
+                        cin >> nombre;
+                        cout << "Ingrese la edad del pasajero: ";
+                        cin >> edad;
+                        cout << "Ingrese el vagon donde se asignará al pasajero: ";
+                        cin >> vagon;
+
+                        // Aquí hay que llamar la función que agrega el pasajero
+                        listaPasajeros.agregarPasajero(nombre, edad, vagon, listaDoble);
+                        break;
+                    }
+                    case 2: {
+                        // muestra todos los pajeros
+                        //hay que poner las función de llamar pasajeros;
+                        break;
+                    }
+                    case 3: {
+                        string nombreEliminar;
+                        string vagonEliminar;
+
+                        cout << "Ingrese el nombre del pasajero que desea eliminar: ";
+                        cin >> nombreEliminar;
+                        cout << "Ingrese el vagon del pasajero: ";
+                        cin >> vagonEliminar;
+
+                        // Llamar la función que elimina al pasajero
+                        listaPasajeros.BorrarPasajeroPorNombreYVagon(nombreEliminar, vagonEliminar, listaDoble);
+                        break;
                     }
                     default:
-                    cout <<"La opcion no es valida"
-                    break
-                 }   
-                 break;
+                        cout << "Opción no válida." << endl;
+                        break;
+                }
+                break;
             }
-/*Aun no esta terminado, estoy haciendolo despúes hay que añadir las funciones donde corresponden por el 
-momento lo podemos ver como un borrador o para tener una idea del menu*/
+
+            case 2: {
+                int opcion2;
+                cout << "\n-+-+-+-+Administrar lista de vagones+-+-+-" << endl;
+                cout << "1. Agregar vagon" << endl;
+                cout << "2. Mostrar todos los vagones" << endl;
+                cout << "3. Eliminar vagon" << endl;
+                cout << "Elija una opcion: ";
+                cin >> opcion2;
+
+                switch (opcion2) {
+                    case 1: {
+                        string color;
+                        cout << "Ingrese el color del nuevo vagon: ";
+                        cin >> color;
+
+                        int nuevoId = listaAmenidades.cantidadTotalDeAmenidades() + 1;
+                        listaDoble.insertar(color, nuevoId);
+                        break;
+                    }
+                    case 2: {
+                        // Mostrar todos los vagones
+                        listaDoble.mostrarTodosLosVagones();
+                        break;
+                    }
+                    case 3: {
+                        string colorEliminar;
+                        cout << "Ingrese el color del vagon a eliminar: ";
+                        cin >> colorEliminar;
+
+                        // Llamar la función que elimina el vagon
+                        listaDoble.eliminar(colorEliminar);
+                        break;
+                    }
+                    default:
+                        cout << "Opción no válida." << endl;
+                        break;
+                }
+                break;
+            }
+
+            case 3: {
+                // Aquí se vamos a gestionar las estaciones
+                // se agrega las funciones correspondientes para agregar, mostrar y eliminar estaciones
+                cout << "\nAdministrar lista de estaciones" << endl;
+                break;
+            }
+
+            case 4: {
+                // Aquí se deberan gestionar las amenidades
+                // Agregar las funciones correspondientes para agregar, mostrar y eliminar amenidades
+                cout << "\nAdministrar lista de amenidades" << endl;
+                break;
+            }
+
+            case 5: {
+                // Función para moverse por los vagones
+                //hay que llamar a la duncio par amovernos en los vagones;
+                break;
+            }
+
+            case 6:
+                cout << "Saliendo del menu." << endl;
+                break;
+
+            default:
+                cout << "Opción no válida. Intente de nuevo." << endl;
+                break;
+        }
+    }
+}
+
