@@ -317,3 +317,65 @@ void verVagones(Vagon* cabeza) {
     }
     cout << endl;
 }
+
+//Aquí estoy intentado hacer el menú de todas las cosas//
+void Menu_para_administrar_información(/*meter las listas y las funcione*/)
+{
+    int opcion=0
+    While(opcion !=6)
+    {
+        cout << "\n-+-+-+-+-+-+ Menu del tren +-+-+-+-+-+-+-+-\n";
+        cout << "1: Detalles de los pasajeros.\n";
+        cout << "2: Detalles de los vagones.\n";
+        cout << "3: Detalles estaciones\n";
+        cout << "4: Detalles anenidades.\n";
+        cout << "5: Moverse por el vagon.\n";
+        cout << "6: Salir al menu principal\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+        switch (opcion)
+        {
+        case 1:{
+            int opcion1;
+            cout << "\n-+-+-+-+Administrar lista de pasajeros+-+-+-" << endl;
+            cout << "1.Agregar pasajero" <<endl;
+            cout << "2.Mostrar todos los pasajeros"<<endl;
+            cout << "3.Eliminar pasajero" <<endl;
+            cout << "Elija una opcion" ;
+            cin >> opción 1;
+
+            swich(opcion1){
+                case 1:{
+                    string nombre; //aqui debemosllemar esas funciones
+                   //creo que aquí va aun dato con respecto al pasajero
+                    string vagon;
+                    cout << "Ingrese el nombre del pasajero" << endl;
+                    cin  >> nombre; //aqui seria la funcion que cumple esta funcion 
+                    cout <<"Ingrese el vagon";
+                    cin  >> vagon;
+                    break;
+                }
+                case 2:
+                //Aquí debe ir la lista qur contiene todos los pasajeros
+                break;
+
+                case 3:{
+                    string //aqui va la funcion para eliminar pasajeros
+                    string // aquí va la funcion del vagon
+                    cout << "Aqui estan todods los pasajeros que estan abordo";
+                    //aqui la funcion que muestre los pasajeros
+                    cout << "Inhgrese el nombre del pasajero a eleminar";
+                    cin >> //igual el nombre de la funcion para eleminar pasajeros
+                    cout << "Ingrese el vagon del pasajero";
+                    cin >> //funcion del vagon
+                    //aqui habria que mostrar que se elimino
+                    break;
+                    }
+                    default:
+                    cout <<"La opcion no es valida"
+                    break
+                 }   
+                 break;
+            }
+/*Aun no esta terminado, estoy haciendolo despúes hay que añadir las funciones donde corresponden por el 
+momento lo podemos ver como un borrador o para tener una idea del menu*/
