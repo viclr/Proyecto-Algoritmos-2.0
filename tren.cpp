@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <limits>
 bool volverMenuprincipal = false;
 
 using namespace std;
@@ -14,6 +15,10 @@ struct Amenidad
     Amenidad(string nombre, int cantidad) : nombre(nombre), cantidad(cantidad), siguiente(nullptr) {}
 };
 
+struct Parada {
+    int id;
+    std::string nombre;
+};
 
 struct Vagon
 {
@@ -299,11 +304,11 @@ void modificarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
     cout << "Nombre de el vagon '" << vagonActual->nombre << "' modificado correctamente." << endl;
 }
 
-void verVagones(Vagon* cabeza) {
+int verVagones(Vagon* cabeza) {
     if (cabeza == nullptr) 
     {
         cout << "No hay vagones en el tren." << endl;
-        return;
+        return 0;
     }
 
     Vagon* temp = cabeza;
@@ -316,10 +321,11 @@ void verVagones(Vagon* cabeza) {
         temp = temp->siguiente;
     }
     cout << endl;
+    return 1;
 }
-
-//Aquí estoy intentado hacer el menú de todas las cosas//
-void Menu_para_administrar_informacion(//aquí hay que llamas a las listas correspondiendtes)
+/*
+//Aqui estoy intentado hacer el menu de todas las cosas//
+void Menu_para_administrar_informacion(aqui hay que llamas a las listas correspondiendtes)
 {
     int opcion = 0;
     while (opcion != 6)
@@ -355,16 +361,18 @@ void Menu_para_administrar_informacion(//aquí hay que llamas a las listas corre
                         cin >> nombre;
                         cout << "Ingrese la edad del pasajero: ";
                         cin >> edad;
-                        cout << "Ingrese el vagon donde se asignará al pasajero: ";
+                        cout << "Ingrese el vagon donde se asignara al pasajero: ";
                         cin >> vagon;
 
-                        // Aquí hay que llamar la función que agrega el pasajero
-                        listaPasajeros.agregarPasajero(nombre, edad, vagon, listaDoble);
+                        Vagon *vagonTem = new Vagon(vagon);
+
+                        // Aqui hay que llamar la funcion que agrega el pasajero
+                         vagonTem->agregarpasajero(nombre);
                         break;
                     }
                     case 2: {
                         // muestra todos los pajeros
-                        //hay que poner las función de llamar pasajeros;
+                        //hay que poner las funcion de llamar pasajeros;
                         break;
                     }
                     case 3: {
@@ -376,12 +384,12 @@ void Menu_para_administrar_informacion(//aquí hay que llamas a las listas corre
                         cout << "Ingrese el vagon del pasajero: ";
                         cin >> vagonEliminar;
 
-                        // Llamar la función que elimina al pasajero
+                        // Llamar la funcion que elimina al pasajero
                         listaPasajeros.BorrarPasajeroPorNombreYVagon(nombreEliminar, vagonEliminar, listaDoble);
                         break;
                     }
                     default:
-                        cout << "Opción no válida." << endl;
+                        cout << "Opcion no valida." << endl;
                         break;
                 }
                 break;
@@ -416,33 +424,33 @@ void Menu_para_administrar_informacion(//aquí hay que llamas a las listas corre
                         cout << "Ingrese el color del vagon a eliminar: ";
                         cin >> colorEliminar;
 
-                        // Llamar la función que elimina el vagon
+                        // Llamar la funcion que elimina el vagon
                         listaDoble.eliminar(colorEliminar);
                         break;
                     }
                     default:
-                        cout << "Opción no válida." << endl;
+                        cout << "Opcion no valida." << endl;
                         break;
                 }
                 break;
             }
 
             case 3: {
-                // Aquí se vamos a gestionar las estaciones
+                // Aqui se vamos a gestionar las estaciones
                 // se agrega las funciones correspondientes para agregar, mostrar y eliminar estaciones
                 cout << "\nAdministrar lista de estaciones" << endl;
                 break;
             }
 
             case 4: {
-                // Aquí se deberan gestionar las amenidades
+                // Aqui se deberan gestionar las amenidades
                 // Agregar las funciones correspondientes para agregar, mostrar y eliminar amenidades
                 cout << "\nAdministrar lista de amenidades" << endl;
                 break;
             }
 
             case 5: {
-                // Función para moverse por los vagones
+                // Funcion para moverse por los vagones
                 //hay que llamar a la duncio par amovernos en los vagones;
                 break;
             }
@@ -452,9 +460,222 @@ void Menu_para_administrar_informacion(//aquí hay que llamas a las listas corre
                 break;
 
             default:
-                cout << "Opción no válida. Intente de nuevo." << endl;
+                cout << "Opcion no valida. Intente de nuevo." << endl;
                 break;
+        }
+    }
+};
+
+*/
+
+void LimpiarPantalla() {
+    #if defined(_WIN32) || defined(_WIN64)
+        system("cls");  // Comando para Windows
+    #else
+        system("clear");  // Comando para Linux o macOS
+    #endif
+}
+
+void editarEnVagon(Vagon* vagonactual) {
+    int opcion = -1;
+    while (opcion != 0) {
+        cout << "\n-+-+-+-+-+-+ Menu de Edicion +-+-+-+-+-+-+-+-\n";
+        cout << "1. Editar Pasajeros\n";
+        cout << "2. Editar Amenidades\n";
+        cout << "3. Modificar el Vagon\n";
+        cout << "0. Salir\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1: {
+            // Submenu para pasajeros
+            int subopcion = -1;
+            while (subopcion != 0) {
+                cout << "\n--- Gestion de Pasajeros ---\n";
+                cout << "1. Agregar pasajero\n";
+                cout << "2. Eliminar pasajero\n";
+                cout << "3. Mostrar pasajeros\n";
+                cout << "0. Volver\n";
+                cout << "Opcion: ";
+                cin >> subopcion;
+
+                switch (subopcion) {
+                case 1: {
+                    string nombrePasajero;
+                    vagonactual->mostrarpasajeros();
+                    cout << "Ingrese el nombre del pasajero: ";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, nombrePasajero);
+                    LimpiarPantalla();
+                    vagonactual->agregarpasajero(nombrePasajero);
+                    break;
+                }
+                case 2: {
+                    string nombrePasajero;
+                    vagonactual->mostrarpasajeros();
+                    cout << "Ingrese el nombre del pasajero a eliminar: ";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, nombrePasajero);
+                    LimpiarPantalla();
+                    vagonactual->eliminarpasajero(nombrePasajero);
+                    break;
+                }
+                case 3:
+                    LimpiarPantalla();
+                    vagonactual->mostrarpasajeros();
+                    break;
+                default:
+                    if(subopcion != 0){
+                        LimpiarPantalla();
+                        cout << "Opcion no valida." << endl;
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+        case 2: {
+            // Submenu para amenidades
+            int subopcionA=-1;
+            while (subopcionA != 0) {
+                cout << "\n--- Gestion de Amenidades ---\n";
+                cout << "1. Agregar amenidad\n";
+                cout << "2. Eliminar amenidad\n";
+                cout << "3. Mostrar amenidades\n";
+                cout << "4. Modificar amenidad\n";
+                cout << "0. Volver\n";
+                cout << "Opcion: ";
+                cin >> subopcionA;
+
+                switch (subopcionA) {
+                case 1: {
+                    string nombreAmenidad;
+                    int cantidad;
+                    cout << "Ingrese el nombre de la amenidad: ";
+                    vagonactual->mostrarAmenidades(vagonactual);
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, nombreAmenidad);
+                    cout << "Ingrese la cantidad: ";
+                    cin >> cantidad;
+                    LimpiarPantalla();
+                    vagonactual->agregarAmenidad(vagonactual, nombreAmenidad, cantidad);
+                    break;
+                }
+                case 2: {
+                    string nombreAmenidad;
+                    vagonactual->mostrarAmenidades(vagonactual);
+                    cout << "Ingrese el nombre de la amenidad a eliminar: ";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, nombreAmenidad);
+                    LimpiarPantalla();
+                    vagonactual->eliminarAmenidad(nombreAmenidad);
+                    break;
+                }
+                case 3:
+                    LimpiarPantalla();
+                    vagonactual->mostrarAmenidades(vagonactual);
+                    break;
+                case 4:
+                    LimpiarPantalla();
+                    vagonactual->modificarAmenidad();
+                    break;
+                default:
+                    if (subopcionA != 0){
+                        LimpiarPantalla();
+                        cout << "Opcion no valida." << endl;
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+        case 3: {
+            string nuevoNombre;
+            cout << "Ingrese el nuevo nombre del vagon: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, nuevoNombre);
+            vagonactual->nombre = nuevoNombre;
+            LimpiarPantalla();
+            cout << "Nombre del vagon "<<nuevoNombre<<" modificado correctamente." << endl;
+            break;
+        }
+        case 0:
+            LimpiarPantalla();
+            cout << "Saliendo de la edicion del vagon." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
+            break;
         }
     }
 }
 
+
+void menu(Vagon* cabeza, Vagon*& vagonactual) {
+    int opcion = -1;
+    while (opcion != 0) {
+        cout << "\n-+-+-+-+-+-+ Menu General +-+-+-+-+-+-+-+-\n";
+        cout << "1. Administracion de informacion\n";
+        cout << "2. Generacion de reportes\n";
+        cout << "0. Salir\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1: {
+            LimpiarPantalla();
+            int hay = verVagones(cabeza);
+            if (hay == 0) {
+                string opc;
+                cout << "\n¿Deseas agregar un vagon? (si/no)\n";
+                cin >> opc;
+                if (opc == "si") {
+                    string nombre;
+                    cout << "Inserte el nombre del vagon: ";
+                    cin >> nombre;
+                    LimpiarPantalla();
+                    agregarVagon(cabeza, nombre, vagonactual);
+                } else {
+                    break;
+                }
+            } else {
+                cout << "Elija que vagon quiere editar: ";
+                string nombreVagon;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, nombreVagon);
+
+                Vagon* temp = cabeza;
+                while (temp != nullptr && temp->nombre != nombreVagon) {
+                    temp = temp->siguiente;
+                }
+
+                if (temp != nullptr) {
+                    vagonactual = temp;
+                    editarEnVagon(vagonactual);
+                } else {
+                    cout << "Vagon no encontrado." << endl;
+                }
+            }
+            break;
+        }
+        case 2:
+            LimpiarPantalla();
+            // Falta la parte de generar reportes
+            break;
+        case 0:
+            cout << "Saliendo del programa." << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intente de nuevo." << endl;
+            break;
+        }
+    }
+}
+
+int main() {
+    Vagon* cabeza = nullptr;
+    Vagon* vagonactual = nullptr;
+    menu(cabeza, vagonactual);
+    return 0;
+}
