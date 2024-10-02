@@ -2,6 +2,8 @@
 #include <list>
 #include <string>
 #include <limits>
+#include <algorithm>
+#include <iterator>
 bool volverMenuprincipal = false;
 
 using namespace std;
@@ -323,150 +325,9 @@ int verVagones(Vagon* cabeza) {
     cout << endl;
     return 1;
 }
-/*
-//Aqui estoy intentado hacer el menu de todas las cosas//
-void Menu_para_administrar_informacion(aqui hay que llamas a las listas correspondiendtes)
-{
-    int opcion = 0;
-    while (opcion != 6)
-    {
-        cout << "\n-+-+-+-+-+-+ Menu del tren +-+-+-+-+-+-+-+-\n";
-        cout << "1: Detalles de los pasajeros.\n";
-        cout << "2: Detalles de los vagones.\n";
-        cout << "3: Detalles de las estaciones.\n";
-        cout << "4: Detalles de las amenidades.\n";
-        cout << "5: Moverse por el vagon.\n";
-        cout << "6: Salir al menu principal\n";
-        cout << "Seleccione una opcion: ";
-        cin >> opcion;
 
-        switch (opcion)
-        {
-            case 1: {
-                int opcion1;
-                cout << "\n-+-+-+-+Administrar lista de pasajeros+-+-+-" << endl;
-                cout << "1. Agregar pasajero" << endl;
-                cout << "2. Mostrar todos los pasajeros" << endl;
-                cout << "3. Eliminar pasajero" << endl;
-                cout << "Elija una opcion: ";
-                cin >> opcion1;
 
-                switch (opcion1) {
-                    case 1: {
-                        string nombre;
-                        int edad;
-                        string vagon;
 
-                        cout << "Ingrese el nombre del pasajero: ";
-                        cin >> nombre;
-                        cout << "Ingrese la edad del pasajero: ";
-                        cin >> edad;
-                        cout << "Ingrese el vagon donde se asignara al pasajero: ";
-                        cin >> vagon;
-
-                        Vagon *vagonTem = new Vagon(vagon);
-
-                        // Aqui hay que llamar la funcion que agrega el pasajero
-                         vagonTem->agregarpasajero(nombre);
-                        break;
-                    }
-                    case 2: {
-                        // muestra todos los pajeros
-                        //hay que poner las funcion de llamar pasajeros;
-                        break;
-                    }
-                    case 3: {
-                        string nombreEliminar;
-                        string vagonEliminar;
-
-                        cout << "Ingrese el nombre del pasajero que desea eliminar: ";
-                        cin >> nombreEliminar;
-                        cout << "Ingrese el vagon del pasajero: ";
-                        cin >> vagonEliminar;
-
-                        // Llamar la funcion que elimina al pasajero
-                        listaPasajeros.BorrarPasajeroPorNombreYVagon(nombreEliminar, vagonEliminar, listaDoble);
-                        break;
-                    }
-                    default:
-                        cout << "Opcion no valida." << endl;
-                        break;
-                }
-                break;
-            }
-
-            case 2: {
-                int opcion2;
-                cout << "\n-+-+-+-+Administrar lista de vagones+-+-+-" << endl;
-                cout << "1. Agregar vagon" << endl;
-                cout << "2. Mostrar todos los vagones" << endl;
-                cout << "3. Eliminar vagon" << endl;
-                cout << "Elija una opcion: ";
-                cin >> opcion2;
-
-                switch (opcion2) {
-                    case 1: {
-                        string color;
-                        cout << "Ingrese el color del nuevo vagon: ";
-                        cin >> color;
-
-                        int nuevoId = listaAmenidades.cantidadTotalDeAmenidades() + 1;
-                        listaDoble.insertar(color, nuevoId);
-                        break;
-                    }
-                    case 2: {
-                        // Mostrar todos los vagones
-                        listaDoble.mostrarTodosLosVagones();
-                        break;
-                    }
-                    case 3: {
-                        string colorEliminar;
-                        cout << "Ingrese el color del vagon a eliminar: ";
-                        cin >> colorEliminar;
-
-                        // Llamar la funcion que elimina el vagon
-                        listaDoble.eliminar(colorEliminar);
-                        break;
-                    }
-                    default:
-                        cout << "Opcion no valida." << endl;
-                        break;
-                }
-                break;
-            }
-
-            case 3: {
-                // Aqui se vamos a gestionar las estaciones
-                // se agrega las funciones correspondientes para agregar, mostrar y eliminar estaciones
-                cout << "\nAdministrar lista de estaciones" << endl;
-                break;
-            }
-
-            case 4: {
-                // Aqui se deberan gestionar las amenidades
-                // Agregar las funciones correspondientes para agregar, mostrar y eliminar amenidades
-                cout << "\nAdministrar lista de amenidades" << endl;
-                break;
-            }
-
-            case 5: {
-                // Funcion para moverse por los vagones
-                //hay que llamar a la duncio par amovernos en los vagones;
-                break;
-            }
-
-            case 6:
-                cout << "Saliendo del menu." << endl;
-                break;
-
-            default:
-                cout << "Opcion no valida. Intente de nuevo." << endl;
-                break;
-        }
-    }
-};
-
-*/
 
 void LimpiarPantalla() {
     #if defined(_WIN32) || defined(_WIN64)
@@ -476,13 +337,13 @@ void LimpiarPantalla() {
     #endif
 }
 
-void editarEnVagon(Vagon* vagonactual) {
+void editarEnVagon(Vagon*& cabeza, Vagon* vagonactual) {
     int opcion = -1;
     while (opcion != 0) {
         cout << "\n-+-+-+-+-+-+ Menu de Edicion +-+-+-+-+-+-+-+-\n";
-        cout << "1. Editar Pasajeros\n";
-        cout << "2. Editar Amenidades\n";
-        cout << "3. Modificar el Vagon\n";
+        cout << "1. Pasajeros\n";
+        cout << "2. Amenidades\n";
+        cout << "3. Vagones\n";
         cout << "0. Salir\n";
         cout << "Opcion: ";
         cin >> opcion;
@@ -590,16 +451,68 @@ void editarEnVagon(Vagon* vagonactual) {
             }
             break;
         }
-        case 3: {
-            string nuevoNombre;
-            cout << "Ingrese el nuevo nombre del vagon: ";
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            getline(cin, nuevoNombre);
-            vagonactual->nombre = nuevoNombre;
-            LimpiarPantalla();
-            cout << "Nombre del vagon "<<nuevoNombre<<" modificado correctamente." << endl;
+        /*case 3: {
+
+            int subopcionv=-1;
+            while (subopcionv != 0) {
+                cout << "\n--- Gestion de Vagones ---\n";
+                cout << "1. Agregar vagon\n";
+                cout << "2. Eliminar vagon\n";
+                cout << "3. Mostrar vagones\n";
+                cout << "4. Modificar vagones\n";
+                cout << "0. Volver\n";
+                cout << "Opcion: ";
+                cin >> subopcionv;
+                string nuevoNombre;
+
+                switch (subopcionv) {
+                case 1: {
+                    string nombreAmenidad;
+                    int cantidad;
+                    cout << "Ingrese el nombre de la amenidad: ";
+                    vagonactual->mostrarAmenidades(vagonactual);
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, nombreAmenidad);
+                    cout << "Ingrese la cantidad: ";
+                    cin >> cantidad;
+                    LimpiarPantalla();
+                    vagonactual->agregarAmenidad(vagonactual, nombreAmenidad, cantidad);
+                    break;
+                }
+                case 2: {
+                    string nombreAmenidad;
+                    verVagones(vagonactual);
+                    cout << "Ingrese el nombre del vagon a eliminar: ";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, nombreAmenidad);
+                    LimpiarPantalla();
+                    eliminarVagon(cabeza, vagonactual);
+                    break;
+                }
+                case 3:
+                    LimpiarPantalla();
+                    verVagones(vagonactual);
+                    break;
+                case 4:
+                    cout << "Ingrese el nuevo nombre del vagon: ";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    getline(cin, nuevoNombre);
+                    vagonactual->nombre = nuevoNombre;
+                    LimpiarPantalla();
+                    cout << "Nombre del vagon "<<nuevoNombre<<" modificado correctamente." << endl;
+                    break;
+                default:
+                    if (subopcionv != 0){
+                        LimpiarPantalla();
+                        cout << "Opcion no valida." << endl;
+                    }
+                    break;
+                }
+            }
             break;
-        }
+
+            
+        }*/
         case 0:
             LimpiarPantalla();
             cout << "Saliendo de la edicion del vagon." << endl;
@@ -611,9 +524,259 @@ void editarEnVagon(Vagon* vagonactual) {
     }
 }
 
+//Función para contabilizar la cantidad total de pasajeros en el tren
+void numtotal_pasajeros(Vagon* cabeza) {
+    if (cabeza == nullptr) {
+        cout << "No hay pasajeros en el tren." << endl;
+        return;
+    }
+
+    int total_pasajeros = 0;
+    Vagon* temp = cabeza;
+    while (temp != nullptr) {
+        total_pasajeros += temp->pasajeros.size();
+        temp = temp->siguiente;
+    }
+
+    cout << "Total de pasajeros en el Tren: " << total_pasajeros << endl;
+}
+
+//Funcion para encontrar el vagon con mas pasajeros
+void vagon_maximo_pasajeros(Vagon* cabeza) {
+    list<string> vagonesmax; // Crea una lista que almacena el vagon con mas pasajeros
+    if (cabeza == nullptr) // En caso de que no hayan vagones en el tren
+    {
+        cout << "No hay pasajeros en el tren." << endl;
+        return;
+    }
+    Vagon* temp = cabeza;
+    int maxpasajeros = temp->pasajeros.size();
+    vagonesmax.push_back(temp->nombre); // añade el primer vagon a la lista
+
+    temp = temp->siguiente;
+    while (temp != nullptr) {
+        if (temp->pasajeros.size() > maxpasajeros) // Case in which a new maximum number of passengers is found
+        {
+            maxpasajeros = temp->pasajeros.size();
+            vagonesmax.clear(); // Clear the list of wagons with the most passengers
+            vagonesmax.push_back(temp->nombre); // añade el nuevo vagon a la lista
+        } else if (temp->pasajeros.size() == maxpasajeros) // Caso en el que el vagón tiene el mismo número máximo de pasajeros
+        {
+            vagonesmax.push_back(temp->nombre); // añade el vagon a la lista
+        }
+        temp = temp->siguiente;
+    }
+    if (vagonesmax.empty()) // caso en el que no hay pasajeros en el tren
+    {
+        cout << "No hay pasajeros en el tren." << endl;
+        return;
+    }
+    for (list<string>::iterator x = vagonesmax.begin(); x != vagonesmax.end(); ++x) // Se crea un iterador para recorrer la lista de vagones y encontrar el que tiene más pasajeros
+     {
+        cout << "El vagon con mas pasajeros es el: " << *x << endl;
+    }
+
+    return;
+}
+
+// Function to show the report of amenities by type
+void reporteamenidadesportipo(Vagon* cabeza) {
+    if (cabeza == nullptr) // Case in which there are no wagons in the train
+    {
+        cout << "No hay vagones en el tren." << endl;
+        return;
+    }
+
+    list<string> amenidades; // Creates a list to store the amenities
+    Vagon* temp = cabeza;
+    while (temp != nullptr) {
+        Amenidad* amenidadTemp = temp->amenidades;
+        if (amenidadTemp == nullptr) // Case in which there are no amenities in the wagon
+        {
+            temp = temp->siguiente;
+            continue;
+        }
+        do {
+            if (find(amenidades.begin(), amenidades.end(), amenidadTemp->nombre) == amenidades.end()) // Adds the amenity to the list if it is not already in it
+            {
+                amenidades.push_back(amenidadTemp->nombre);
+            }
+            amenidadTemp = amenidadTemp->siguiente;
+        } while (amenidadTemp != temp->amenidades);
+        temp = temp->siguiente;
+    }
+    if (amenidades.empty()) // Case in which there are no amenities in the train
+    {
+        cout << "No hay amenidades en el tren." << endl;
+        return;
+    }
+
+    int numAmenidades = amenidades.size();
+    string matriz_amenidades[numAmenidades][2]; // Creates a matrix to store the amenities and their total
+
+    temp = cabeza;
+    while (temp != nullptr) {
+        Amenidad* amenidadTemp = temp->amenidades;
+        if (amenidadTemp == nullptr) // Case in which there are no amenities in the wagon
+        {
+            temp = temp->siguiente;
+            continue;
+        }
+        do {
+            for (int i = 0; i < numAmenidades; ++i) {
+                if (matriz_amenidades[i][0] == amenidadTemp->nombre) // Increases the total of the amenity if it is already in the matrix
+                {
+                matriz_amenidades[i][1] = to_string(stoi(matriz_amenidades[i][1]) + amenidadTemp->cantidad); // to_string converts the integer to a string and stoi converts the string to an integer
+                break;
+             }
+            else if (matriz_amenidades[i][0].empty()) // Adds the amenity to the matrix if it is not already in it
+            {
+                matriz_amenidades[i][0] = amenidadTemp->nombre;
+                matriz_amenidades[i][1] = to_string(amenidadTemp->cantidad); // to_string converts the integer to a string
+                break;
+            }
+}
+            amenidadTemp = amenidadTemp->siguiente;
+        } while (amenidadTemp != temp->amenidades);
+        temp = temp->siguiente;
+    }
+
+    cout << "Amenidades disponibles en el tren: " << endl;
+    int y = 1;
+    for (list<string>::iterator x = amenidades.begin(); x != amenidades.end(); ++x) // An iterator is created to go through the list of amenities
+    {
+        cout << y << " : " << *x << endl; // Shows the amenity in the train
+        y++;
+    }
+
+    cout << "Seleccione una amenidad para obtener el total en todos los vagones: ";
+    int opcion_amenidad;
+    cin >> opcion_amenidad;
+
+    while (cin.fail() || (opcion_amenidad < 1 || opcion_amenidad > numAmenidades)) // Validation of the option, it must be an integer between 1 and the number of amenities
+    {
+        cin.clear(); // Clear the input error
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the incorrect input
+        cout << "Opcion no valida. Intente de nuevo: ";
+        cin >> opcion_amenidad;
+    }
+    cout << "Calculando total de " << matriz_amenidades[opcion_amenidad - 1][0] << " en todos los vagones..." << endl;
+
+
+    temp = cabeza;
+    while (temp != nullptr) {
+        cout << "Vagon " << temp->nombre << ": ";
+        Amenidad* amenidadTemp = temp->amenidades;
+        if (amenidadTemp == nullptr) // Case in which there are no amenities in the wagon
+        {
+            cout << "0 " << matriz_amenidades[opcion_amenidad - 1][0] << endl; // Prints 0 if theres no amenity in the wagon
+            temp = temp->siguiente;
+            continue;
+        }
+        bool amenidadEncontrada = false; // Variable to check if the amenity is in the wagon
+        do {
+            if (amenidadTemp->nombre == matriz_amenidades[opcion_amenidad - 1][0]) // Shows the amenity and its total if it is in the wagon
+            {
+                cout << amenidadTemp->cantidad << " " << amenidadTemp->nombre << endl;
+                amenidadEncontrada = true;// Changes the value of the bool if the amenity is found
+            }
+            amenidadTemp = amenidadTemp->siguiente;
+        } while (amenidadTemp != temp->amenidades);
+        if (!amenidadEncontrada) // Prints 0 if the amenity is not in the wagon
+        {
+            cout << "0 " << matriz_amenidades[opcion_amenidad - 1][0] << endl;
+    }
+    temp = temp->siguiente;
+}
+
+    cout << "El total de la amenidad " << matriz_amenidades[opcion_amenidad - 1][0] << " en el tren: " << matriz_amenidades[opcion_amenidad - 1][1] << endl; // Shows the total of the amenity in the train
+}
+
+// Funcion para la cantidad de pasajeros por vagon
+void pasajeros_por_vagon(Vagon* cabeza) {
+    if (cabeza == nullptr) {
+        cout << "No hay pasajeros en el tren." << endl;
+        return;
+    }
+
+    Vagon* temp = cabeza;
+    while (temp != nullptr) {
+        cout << "Vagon " << temp->nombre << ": " << temp->pasajeros.size() << " pasajeros" << endl;
+        temp = temp->siguiente;
+    }
+    int total_pasajeros = 0;
+    Vagon* temp2 = cabeza;
+    while (temp2 != nullptr) {
+        total_pasajeros += temp2->pasajeros.size();
+        temp2 = temp2->siguiente;
+    }
+    cout << "Total de pasajeros en el Tren: " << total_pasajeros << endl;
+}
+
+void Menu_de_reportes(Vagon*& cabeza, Vagon*& vagonActual) {
+    /*if (vagonActual == nullptr) // Case in which the current wagon is not specified
+    {
+        cout << "No se ha seleccionado ningún vagón actual." << endl;
+        return;
+    }*/
+
+    int opcion_reportes;
+    do {
+        cout << "Menu de Reportes" << endl;
+        cout << "1 : Reporte de amenidades totales por tipo" << endl;
+        cout << "2 : Numero total de pasajeros" << endl;
+        cout << "3 : Vagon con mas pasajeros" << endl;
+        cout << "4 : Distribucion de pasajeros por vagon" << endl;
+        cout << "5 : Volver al menu principal" << endl;
+        cout << "Ingrese una opcion: ";
+        cin >> opcion_reportes;
+        while (cin.fail() || (opcion_reportes < 1 || opcion_reportes > 5)) // Validation of the option, it must be an integer between 1 and 5
+         {
+            cin.clear(); // Clear the input error
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the incorrect input
+            cout << "Opcion no valida. Intente de nuevo: ";
+            cin >> opcion_reportes;
+        }
+
+        switch (opcion_reportes) {
+            case 1: {
+                cout << "Reporte de amenidades totales por tipo" << endl;
+                reporteamenidadesportipo(cabeza); // Calls the function to show the report of amenities by type
+                break;
+            }
+            case 2: {
+                cout << "------Reporte de Numero total de pasajeros------" << endl;
+                numtotal_pasajeros(cabeza); // Calls the function to show the report of the total number of passengers
+                break;
+            }
+            case 3: {
+                cout << "------Reporte de vagon con mas pasajeros------" << endl;
+                vagon_maximo_pasajeros(cabeza); // Calls the function to show the report of the wagon with the most passengers
+                break;
+            }
+            case 4: {
+                cout << "------Reporte de distribucion de pasajeros------" << endl;
+                pasajeros_por_vagon(cabeza); // Calls the function to show the report of the distribution of passengers
+                break;
+            }
+            case 5: {
+                cout << "Volviendo al menu principal" << endl;
+                break; // Exit to the main menu
+            }
+            default: {
+                cout << "Opcion no valida" << endl;
+                break;
+            }
+        }
+    } while (opcion_reportes != 5); // Loop while the option is different from 5
+}
+
+
+
 
 void menu(Vagon* cabeza, Vagon*& vagonactual) {
     int opcion = -1;
+    Vagon* vagonActual = nullptr;
     while (opcion != 0) {
         cout << "\n-+-+-+-+-+-+ Menu General +-+-+-+-+-+-+-+-\n";
         cout << "1. Administracion de informacion\n";
@@ -652,7 +815,7 @@ void menu(Vagon* cabeza, Vagon*& vagonactual) {
 
                 if (temp != nullptr) {
                     vagonactual = temp;
-                    editarEnVagon(vagonactual);
+                    editarEnVagon(cabeza,vagonactual);
                 } else {
                     cout << "Vagon no encontrado." << endl;
                 }
@@ -661,7 +824,7 @@ void menu(Vagon* cabeza, Vagon*& vagonactual) {
         }
         case 2:
             LimpiarPantalla();
-            // Falta la parte de generar reportes
+            Menu_de_reportes(cabeza, vagonActual);
             break;
         case 0:
             cout << "Saliendo del programa." << endl;
