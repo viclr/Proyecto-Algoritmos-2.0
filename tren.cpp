@@ -33,14 +33,14 @@ struct Vagon
     Vagon(string nombre) : nombre(nombre), siguiente(nullptr), anterior(nullptr), amenidades(nullptr) {}
 
 
-void agregarpasajero(string nombrepasajero)
+void agregarpasajero(string nombrepasajero) //agregamos pasajeros
     {
         pasajeros.push_back(nombrepasajero);
         cout<<"El pasajero: "<<nombrepasajero<<" fue agregado al vagon: "<<nombre<<" correctamente"<<endl;
     }
 
 
-void mostrarpasajeros()
+void mostrarpasajeros() //nos muestra los pasajeros en el vagon
     {
         if (pasajeros.empty())
         {
@@ -54,23 +54,23 @@ void mostrarpasajeros()
         }
     }
 
-void eliminarpasajero(string nombrepasajero)
+void eliminarpasajero(string nombrepasajero) //con esta funcion eliminamos pasajeros
     {
         pasajeros.remove(nombrepasajero);
         cout<<"El pasajero: "<<nombrepasajero<<" fue correctamente eliminado de el vagon: "<<nombre<<endl;
     };
 
 
-void agregarAmenidad(Vagon* actual, string nombre, int cantidad) {
+void agregarAmenidad(Vagon* actual, string nombre, int cantidad) { //aquí vamos a agregar amenidades
         Amenidad* nuevaAmenidad = new Amenidad(nombre, cantidad);
 
-        if (actual->amenidades == nullptr)
+        if (actual->amenidades == nullptr) // si la amanidad es igual a null va a hacer igual a amanidad nueva
         {
             actual->amenidades = nuevaAmenidad;
             actual->amenidades->siguiente = actual->amenidades;
         } else
         {
-            Amenidad* temp = actual->amenidades;
+            Amenidad* temp = actual->amenidades; //si ya tiene amanidades lo agrega al final de la lista
             while (temp->siguiente != actual->amenidades) {
                 temp = temp->siguiente;
             }
@@ -82,14 +82,14 @@ void agregarAmenidad(Vagon* actual, string nombre, int cantidad) {
     }
 
 
-void mostrarAmenidades(Vagon* actual)
+void mostrarAmenidades(Vagon* actual) //muestra la amenidad actual
     {
-        if (actual->amenidades == nullptr)
+        if (actual->amenidades == nullptr) //se fija si hay algo si esta vacio tira el mensaje de que no hay amanidades.
         {
             cout << "No hay amenidades en este vagon." << endl;
             return;
         }
-        Amenidad* actualAmenidad = actual->amenidades;
+        Amenidad* actualAmenidad = actual->amenidades; //Aqui el puntero avanza al siguiente nodo en la lista
         do
         {
             cout << "Nombre: " << actualAmenidad->nombre << ", Cantidad: " << actualAmenidad->cantidad << endl;
@@ -98,15 +98,15 @@ void mostrarAmenidades(Vagon* actual)
     }
 
 
-void eliminarAmenidad(string nombre) {
-        if (amenidades == nullptr)
+void eliminarAmenidad(string nombre) { //aquí vamos a eliminar amanodades
+        if (amenidades == nullptr) //si es igaul a nulo pone qye no hay amanidades
         {
             cout << "No hay amenidades en este vagon." << endl;
             return;
         }
 
         Amenidad* temp = amenidades;
-        Amenidad* anterior = nullptr;
+        Amenidad* anterior = nullptr;// se recorre la lista para ver si esta esa amenidad
         bool encontrado = false;
         do {
             if (temp->nombre == nombre)
@@ -118,36 +118,36 @@ void eliminarAmenidad(string nombre) {
             temp = temp->siguiente;
         } while (temp != amenidades);
 
-        if (!encontrado)
+        if (!encontrado) //aqui es para decir si hay amanidades, si no hay manda el mensaje
         {
             cout << "La amenidad '" << nombre << "' no se encontro en este vagon." << endl;
             return;
         }
 
-        if (temp == amenidades && temp->siguiente == amenidades)
+        if (temp == amenidades && temp->siguiente == amenidades) // si la amenidad es la unica en la lista se elimina el nodo y el vagón queda sin amanidades
         {
             delete amenidades;
             amenidades = nullptr;
         } else if (temp == amenidades)
          {
-            Amenidad* ultimo = amenidades;
-            while (ultimo->siguiente != amenidades) {
+            Amenidad* ultimo = amenidades; //aquí la amenidad es la primera de la lista entonces se elimina, se busca el ultimo nodo y se conesta con el que le 
+            while (ultimo->siguiente != amenidades) {// seguia al que eliminamos 
                 ultimo = ultimo->siguiente;
             }
             amenidades = amenidades->siguiente;
             ultimo->siguiente = amenidades;
             delete temp;
-        } else
+        } else 
         {
-            anterior->siguiente = temp->siguiente;
+            anterior->siguiente = temp->siguiente;//la amenidad esta en madio solo se elimina no hay que ajustar nada como el caso anterior
             delete temp;
         }
     }
 
 
 
-void modificarAmenidad() {
-        if (amenidades == nullptr)
+void modificarAmenidad() { //modificar amenidades 
+        if (amenidades == nullptr) // nos hay amanidades 
         {
             cout << "No hay amenidades en este vagon." << endl;
             return;
@@ -177,7 +177,7 @@ void modificarAmenidad() {
                     cin >> opcion_modificar;
                 }
 
-                switch (opcion_modificar) {
+                switch (opcion_modificar) { //aquí vamos a modificar el nombfre de la amanidad
                     case 1: {
                         string nuevoNombre;
                         cout << "Ingrese el nuevo nombre de la amenidad: ";
@@ -188,7 +188,7 @@ void modificarAmenidad() {
                         break;
                     }
                     case 2: {
-                        int nuevaCantidad;
+                        int nuevaCantidad; //aquí vamos a madificar la cantidad e la amanidad
                         cout << "Ingrese la nueva cantidad de la amenidad: ";
                         cin >> nuevaCantidad;
                         actual->cantidad = nuevaCantidad; 
@@ -208,13 +208,13 @@ void modificarAmenidad() {
     }
 };
 
-void agregarVagon(Vagon*& cabeza, const string& nombreNuevoVagon, Vagon*& vagonactual) {
+void agregarVagon(Vagon*& cabeza, const string& nombreNuevoVagon, Vagon*& vagonactual) { //agregamos un vagón
     Vagon* nuevoVagon = new Vagon(nombreNuevoVagon);
 
     nuevoVagon->anterior = nullptr;
 
 
-    if (cabeza == nullptr) 
+    if (cabeza == nullptr) //si la lista esta vacía, el vagon que añadimos va a hacer el primero
     {
         cabeza = nuevoVagon;
         vagonactual = cabeza;
@@ -224,7 +224,7 @@ void agregarVagon(Vagon*& cabeza, const string& nombreNuevoVagon, Vagon*& vagona
 
 
     nuevoVagon->siguiente = vagonactual->siguiente;
-    if (vagonactual->siguiente != nullptr) 
+    if (vagonactual->siguiente != nullptr) //aqui la lista tiene algo, por lo que el vagon que estamos añadiendo va después del que existe
     {
         vagonactual->siguiente->anterior = nuevoVagon;
     }
@@ -235,14 +235,14 @@ void agregarVagon(Vagon*& cabeza, const string& nombreNuevoVagon, Vagon*& vagona
 }
 
 
-void eliminarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
-    if (cabeza == nullptr) 
+void eliminarVagon(Vagon*& cabeza, Vagon*& vagonActual) { //para eleminar el vagon 
+    if (cabeza == nullptr)  //la lista esta vacia
     {
         cout << "No hay vagones en el tren." << endl;
         return;
     }
     
-    Vagon* vagonAEliminar = vagonActual;
+    Vagon* vagonAEliminar = vagonActual; //la lista tiene elementos y queremos eliminar el vagon aactual
     if (vagonActual->siguiente != nullptr)
     {
         vagonActual = vagonActual->siguiente;
@@ -252,15 +252,15 @@ void eliminarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
     }
     
 
-    if (cabeza == vagonAEliminar)
-    {
+    if (cabeza == vagonAEliminar) //estamos eliminando el primer vagon por lo que que ajustamos el nodo anteiror 
+    { //para que quede viendo al siguiente del que estamos eliminando
         cabeza = cabeza->siguiente;
 
         if (cabeza != nullptr)
         {
             cabeza->anterior = nullptr;
         }
-    } else
+    } else //el vagon a eliminar no es la cabeza por lo que se hacen los ajustes necesarios para quitar el vagon y unir los demás
     {
         vagonAEliminar->anterior->siguiente = vagonAEliminar->siguiente;
         if (vagonAEliminar->siguiente != nullptr)
@@ -281,8 +281,8 @@ void eliminarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
 }
 
 
-void modificarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
-    if (cabeza == nullptr) 
+void modificarVagon(Vagon*& cabeza, Vagon*& vagonActual) { //modificamos el vagon en el que estamos
+    if (cabeza == nullptr) // la lista esta vacia
     {
         cout << "No existen vagones en el tren" << endl;
         return;
@@ -306,7 +306,7 @@ void modificarVagon(Vagon*& cabeza, Vagon*& vagonActual) {
     cout << "Nombre de el vagon '" << vagonActual->nombre << "' modificado correctamente." << endl;
 }
 
-int verVagones(Vagon* cabeza) {
+int verVagones(Vagon* cabeza) { //aqui es para ver los vagones que tenemos creados
     if (cabeza == nullptr) 
     {
         cout << "No hay vagones en el tren." << endl;
@@ -329,7 +329,7 @@ int verVagones(Vagon* cabeza) {
 
 
 
-void LimpiarPantalla() {
+void LimpiarPantalla() { //limpia la panatalla 
     #if defined(_WIN32) || defined(_WIN64)
         system("cls");  // Comando para Windows
     #else
@@ -337,7 +337,7 @@ void LimpiarPantalla() {
     #endif
 }
 
-void editarEnVagon(Vagon*& cabeza, Vagon* vagonactual) {
+void editarEnVagon(Vagon*& cabeza, Vagon* vagonactual) { //editamos los vagaones 
     int opcion = -1;
     while (opcion != 0) {
         cout << "\n-+-+-+-+-+-+ Menu de Edicion +-+-+-+-+-+-+-+-\n";
@@ -354,7 +354,7 @@ void editarEnVagon(Vagon*& cabeza, Vagon* vagonactual) {
             int subopcion = -1;
             while (subopcion != 0) {
                 cout << "\n--- Gestion de Pasajeros ---\n";
-                cout << "1. Agregar pasajero\n";
+                cout << "1. Agregar pasajero\n"; 
                 cout << "2. Eliminar pasajero\n";
                 cout << "3. Mostrar pasajeros\n";
                 cout << "0. Volver\n";
@@ -451,7 +451,7 @@ void editarEnVagon(Vagon*& cabeza, Vagon* vagonactual) {
             }
             break;
         }
-        /*case 3: {
+        case 3: {
 
             int subopcionv=-1;
             while (subopcionv != 0) {
@@ -512,7 +512,7 @@ void editarEnVagon(Vagon*& cabeza, Vagon* vagonactual) {
             break;
 
             
-        }*/
+        }
         case 0:
             LimpiarPantalla();
             cout << "Saliendo de la edicion del vagon." << endl;
@@ -526,7 +526,7 @@ void editarEnVagon(Vagon*& cabeza, Vagon* vagonactual) {
 
 //Función para contabilizar la cantidad total de pasajeros en el tren
 void numtotal_pasajeros(Vagon* cabeza) {
-    if (cabeza == nullptr) {
+    if (cabeza == nullptr) { // la lsita esta vacia
         cout << "No hay pasajeros en el tren." << endl;
         return;
     }
@@ -555,10 +555,10 @@ void vagon_maximo_pasajeros(Vagon* cabeza) {
 
     temp = temp->siguiente;
     while (temp != nullptr) {
-        if (temp->pasajeros.size() > maxpasajeros) // Case in which a new maximum number of passengers is found
+        if (temp->pasajeros.size() > maxpasajeros) //Caso en el que se encuentra el número máximo de pasajeros
         {
             maxpasajeros = temp->pasajeros.size();
-            vagonesmax.clear(); // Clear the list of wagons with the most passengers
+            vagonesmax.clear(); // Borrar la lista de vagones con más pasajeros
             vagonesmax.push_back(temp->nombre); // añade el nuevo vagon a la lista
         } else if (temp->pasajeros.size() == maxpasajeros) // Caso en el que el vagón tiene el mismo número máximo de pasajeros
         {
@@ -579,25 +579,25 @@ void vagon_maximo_pasajeros(Vagon* cabeza) {
     return;
 }
 
-// Function to show the report of amenities by type
+// Función para mostrar el reporte de comodidades por tipo
 void reporteamenidadesportipo(Vagon* cabeza) {
-    if (cabeza == nullptr) // Case in which there are no wagons in the train
+    if (cabeza == nullptr) // Caso en el que no hay vagones en el tren
     {
         cout << "No hay vagones en el tren." << endl;
         return;
     }
 
-    list<string> amenidades; // Creates a list to store the amenities
+    list<string> amenidades; // Crea una lista para almacenar las comodidades.
     Vagon* temp = cabeza;
     while (temp != nullptr) {
         Amenidad* amenidadTemp = temp->amenidades;
-        if (amenidadTemp == nullptr) // Case in which there are no amenities in the wagon
+        if (amenidadTemp == nullptr) // Caso en el que no hay comodidades en el vagón
         {
             temp = temp->siguiente;
             continue;
         }
         do {
-            if (find(amenidades.begin(), amenidades.end(), amenidadTemp->nombre) == amenidades.end()) // Adds the amenity to the list if it is not already in it
+            if (find(amenidades.begin(), amenidades.end(), amenidadTemp->nombre) == amenidades.end()) //Agrega el servicio a la lista si aún no está en ella.
             {
                 amenidades.push_back(amenidadTemp->nombre);
             }
@@ -605,34 +605,34 @@ void reporteamenidadesportipo(Vagon* cabeza) {
         } while (amenidadTemp != temp->amenidades);
         temp = temp->siguiente;
     }
-    if (amenidades.empty()) // Case in which there are no amenities in the train
+    if (amenidades.empty()) // Caso en el que no hay comodidades en el tren
     {
         cout << "No hay amenidades en el tren." << endl;
         return;
     }
 
     int numAmenidades = amenidades.size();
-    string matriz_amenidades[numAmenidades][2]; // Creates a matrix to store the amenities and their total
+    string matriz_amenidades[numAmenidades][2]; // Crea una matriz para almacenar las comodidades y su total.
 
     temp = cabeza;
     while (temp != nullptr) {
         Amenidad* amenidadTemp = temp->amenidades;
-        if (amenidadTemp == nullptr) // Case in which there are no amenities in the wagon
+        if (amenidadTemp == nullptr) // Caso en el que no hay comodidades en el vagón
         {
             temp = temp->siguiente;
             continue;
         }
         do {
             for (int i = 0; i < numAmenidades; ++i) {
-                if (matriz_amenidades[i][0] == amenidadTemp->nombre) // Increases the total of the amenity if it is already in the matrix
+                if (matriz_amenidades[i][0] == amenidadTemp->nombre) // Aumenta el total de la amenidad si ya está en la matriz.
                 {
-                matriz_amenidades[i][1] = to_string(stoi(matriz_amenidades[i][1]) + amenidadTemp->cantidad); // to_string converts the integer to a string and stoi converts the string to an integer
+                matriz_amenidades[i][1] = to_string(stoi(matriz_amenidades[i][1]) + amenidadTemp->cantidad); // to_string convierte el número entero en una cadena y stoi convierte la cadena en un número entero
                 break;
              }
-            else if (matriz_amenidades[i][0].empty()) // Adds the amenity to the matrix if it is not already in it
+            else if (matriz_amenidades[i][0].empty()) // Agrega el servicio a la matriz si aún no está en ella.
             {
                 matriz_amenidades[i][0] = amenidadTemp->nombre;
-                matriz_amenidades[i][1] = to_string(amenidadTemp->cantidad); // to_string converts the integer to a string
+                matriz_amenidades[i][1] = to_string(amenidadTemp->cantidad); // to_string convierte el número entero en una cadena
                 break;
             }
 }
@@ -643,9 +643,9 @@ void reporteamenidadesportipo(Vagon* cabeza) {
 
     cout << "Amenidades disponibles en el tren: " << endl;
     int y = 1;
-    for (list<string>::iterator x = amenidades.begin(); x != amenidades.end(); ++x) // An iterator is created to go through the list of amenities
+    for (list<string>::iterator x = amenidades.begin(); x != amenidades.end(); ++x) // Se crea un iterador para recorrer la lista de servicios.
     {
-        cout << y << " : " << *x << endl; // Shows the amenity in the train
+        cout << y << " : " << *x << endl; // Muestra las comodidades en el tren.
         y++;
     }
 
@@ -653,10 +653,10 @@ void reporteamenidadesportipo(Vagon* cabeza) {
     int opcion_amenidad;
     cin >> opcion_amenidad;
 
-    while (cin.fail() || (opcion_amenidad < 1 || opcion_amenidad > numAmenidades)) // Validation of the option, it must be an integer between 1 and the number of amenities
+    while (cin.fail() || (opcion_amenidad < 1 || opcion_amenidad > numAmenidades)) // Validación de la opción, debe ser un número entero entre 1 y el número de comodidades
     {
-        cin.clear(); // Clear the input error
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the incorrect input
+        cin.clear(); // Borrar el error de entrada
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar la entrada incorrecta
         cout << "Opcion no valida. Intente de nuevo: ";
         cin >> opcion_amenidad;
     }
@@ -667,44 +667,44 @@ void reporteamenidadesportipo(Vagon* cabeza) {
     while (temp != nullptr) {
         cout << "Vagon " << temp->nombre << ": ";
         Amenidad* amenidadTemp = temp->amenidades;
-        if (amenidadTemp == nullptr) // Case in which there are no amenities in the wagon
+        if (amenidadTemp == nullptr) // Caso en el que no hay comodidades en el vagón
         {
-            cout << "0 " << matriz_amenidades[opcion_amenidad - 1][0] << endl; // Prints 0 if theres no amenity in the wagon
+            cout << "0 " << matriz_amenidades[opcion_amenidad - 1][0] << endl; // Imprime 0 si no hay servicios en el vagón
             temp = temp->siguiente;
             continue;
         }
-        bool amenidadEncontrada = false; // Variable to check if the amenity is in the wagon
+        bool amenidadEncontrada = false; // Variable para comprobar si el servicio está en el vagón.
         do {
-            if (amenidadTemp->nombre == matriz_amenidades[opcion_amenidad - 1][0]) // Shows the amenity and its total if it is in the wagon
+            if (amenidadTemp->nombre == matriz_amenidades[opcion_amenidad - 1][0]) // Muestra la amenidad y su total si está en el vagón.
             {
                 cout << amenidadTemp->cantidad << " " << amenidadTemp->nombre << endl;
-                amenidadEncontrada = true;// Changes the value of the bool if the amenity is found
+                amenidadEncontrada = true;// Cambia el valor del bool si se encuentra la amenidad.
             }
             amenidadTemp = amenidadTemp->siguiente;
         } while (amenidadTemp != temp->amenidades);
-        if (!amenidadEncontrada) // Prints 0 if the amenity is not in the wagon
+        if (!amenidadEncontrada) // Imprime 0 si el servicio no está en el vagón
         {
             cout << "0 " << matriz_amenidades[opcion_amenidad - 1][0] << endl;
     }
     temp = temp->siguiente;
 }
 
-    cout << "El total de la amenidad " << matriz_amenidades[opcion_amenidad - 1][0] << " en el tren: " << matriz_amenidades[opcion_amenidad - 1][1] << endl; // Shows the total of the amenity in the train
+    cout << "El total de la amenidad " << matriz_amenidades[opcion_amenidad - 1][0] << " en el tren: " << matriz_amenidades[opcion_amenidad - 1][1] << endl; // Muestra el total de las comodidades en el tren.
 }
 
 // Funcion para la cantidad de pasajeros por vagon
 void pasajeros_por_vagon(Vagon* cabeza) {
-    if (cabeza == nullptr) {
+    if (cabeza == nullptr) { //la funcion esta vacia
         cout << "No hay pasajeros en el tren." << endl;
         return;
     }
 
-    Vagon* temp = cabeza;
-    while (temp != nullptr) {
+    Vagon* temp = cabeza; 
+    while (temp != nullptr) { //recorrido para mostrar los pasajeros por vagón
         cout << "Vagon " << temp->nombre << ": " << temp->pasajeros.size() << " pasajeros" << endl;
         temp = temp->siguiente;
     }
-    int total_pasajeros = 0;
+    int total_pasajeros = 0; // calcula el total de pasajeros
     Vagon* temp2 = cabeza;
     while (temp2 != nullptr) {
         total_pasajeros += temp2->pasajeros.size();
@@ -730,10 +730,10 @@ void Menu_de_reportes(Vagon*& cabeza, Vagon*& vagonActual) {
         cout << "5 : Volver al menu principal" << endl;
         cout << "Ingrese una opcion: ";
         cin >> opcion_reportes;
-        while (cin.fail() || (opcion_reportes < 1 || opcion_reportes > 5)) // Validation of the option, it must be an integer between 1 and 5
+        while (cin.fail() || (opcion_reportes < 1 || opcion_reportes > 5)) // Validación de la opción, debe ser un número entero entre 1 y 5
          {
-            cin.clear(); // Clear the input error
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the incorrect input
+            cin.clear(); // Borrar el error de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar la entrada incorrecta
             cout << "Opcion no valida. Intente de nuevo: ";
             cin >> opcion_reportes;
         }
@@ -741,34 +741,34 @@ void Menu_de_reportes(Vagon*& cabeza, Vagon*& vagonActual) {
         switch (opcion_reportes) {
             case 1: {
                 cout << "Reporte de amenidades totales por tipo" << endl;
-                reporteamenidadesportipo(cabeza); // Calls the function to show the report of amenities by type
+                reporteamenidadesportipo(cabeza); // Llama a la función para mostrar el reporte de comodidades por tipo
                 break;
             }
             case 2: {
                 cout << "------Reporte de Numero total de pasajeros------" << endl;
-                numtotal_pasajeros(cabeza); // Calls the function to show the report of the total number of passengers
+                numtotal_pasajeros(cabeza); // Llama a la función para mostrar el reporte del número total de pasajeros.
                 break;
             }
             case 3: {
                 cout << "------Reporte de vagon con mas pasajeros------" << endl;
-                vagon_maximo_pasajeros(cabeza); // Calls the function to show the report of the wagon with the most passengers
+                vagon_maximo_pasajeros(cabeza); // Llama a la función para mostrar el reporte del vagón con más pasajeros
                 break;
             }
             case 4: {
                 cout << "------Reporte de distribucion de pasajeros------" << endl;
-                pasajeros_por_vagon(cabeza); // Calls the function to show the report of the distribution of passengers
+                pasajeros_por_vagon(cabeza); // Llama a la función para mostrar el informe de la distribución de pasajeros.
                 break;
             }
             case 5: {
                 cout << "Volviendo al menu principal" << endl;
-                break; // Exit to the main menu
+                break; //Salir al menú principal
             }
             default: {
                 cout << "Opcion no valida" << endl;
                 break;
             }
         }
-    } while (opcion_reportes != 5); // Loop while the option is different from 5
+    } while (opcion_reportes != 5); // Realiza un bucle mientras la opción sea diferente de 5.
 }
 
 
